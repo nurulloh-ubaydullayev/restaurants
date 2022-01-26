@@ -7,6 +7,10 @@ module.exports = gql`
     password: String!
   }
 
+  type Validation {
+    id: ID!
+  }
+
   extend type Mutation {
     register(name: String!, password: String!): String
     login(name: String!, password: String!): String

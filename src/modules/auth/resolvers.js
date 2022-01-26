@@ -12,7 +12,6 @@ module.exports = {
             id: user.user_id,
             name: user.user_name,
             password: user.user_password,
-            isAdmin: user.is_admin,
           });
         }
       } catch (e) {
