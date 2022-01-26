@@ -1,14 +1,16 @@
 const { gql } = require("apollo-server-express");
 
 module.exports = gql`
+  scalar Request
+
   type User {
     id: ID!
     name: String!
     password: String!
   }
 
-  type Validation {
-    id: ID!
+  extend type Query {
+    isAdmin: Request
   }
 
   extend type Mutation {
