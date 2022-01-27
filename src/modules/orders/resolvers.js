@@ -34,7 +34,7 @@ module.exports = {
   Mutation: {
     newOrder: async (
       _,
-      { city, district, address, owner, tel, user, productsList },
+      { city, district, address, owner, tel, productsList },
       { token }
     ) => {
       const { name, password } = verifyUser(token);
@@ -42,7 +42,14 @@ module.exports = {
       const foundUser = await login(name, password);
 
       if (foundUser) {
-        const order = await newOrder(city, district, address, owner, tel, user);
+        const order = await newOrder(
+          city,
+          district,
+          address,
+          owner,
+          tel,
+          foundUser.user_id
+        );
 
         for (let i of productsList) {
           await newOrderProduct(i.count, i.id, order.order_id);
