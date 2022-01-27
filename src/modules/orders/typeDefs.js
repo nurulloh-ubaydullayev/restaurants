@@ -37,7 +37,6 @@ module.exports = gql`
       address: String!
       owner: String!
       tel: String!
-      user: ID!
       productsList: [Data]
     ): String!
   }
