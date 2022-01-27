@@ -12,11 +12,8 @@ const { verifyUser } = require("./lib/jwt");
 app.use(cors());
 
 const pool = new Pool({
-  host: "localhost",
-  port: 5432,
-  user: "postgres",
-  password: "nur2004ub14",
-  database: "restaurants",
+  connectionString:
+    "postgres://fyudvelh:8FpUH7LPs5Q-CocJkEY11X4DkhON4cNw@isilo.db.elephantsql.com/fyudvelh",
 });
 
 let newFileName;
