@@ -51,7 +51,9 @@ module.exports = {
           foundUser.user_id
         );
 
-        for (let i of productsList) {
+        let list = JSON.parse(productsList);
+
+        for (let i of list) {
           await newOrderProduct(i.count, i.id, order.order_id);
         }
         return "Created";
