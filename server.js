@@ -34,12 +34,13 @@ const fileStorage = multer.diskStorage({
 const upload = multer({ storage: fileStorage });
 
 app.post("/product", upload.single("image"), async (req, res) => {
-  const { productName, productCost, restaurantId } = req.body;
-  const client = await pool.connect();
-  const { name, password } = verifyUser(req.headers.token);
+  try {
+    const { productName, productCost, restaurantId } = req.body;
+    const client = await pool.connect();
+    const { name, password } = verifyUser(req.headers.token);
 
-  const { rows: foundUser } = await client.query(
-    `
+    const { rows: foundUser } = await client.query(
+      `
     SELECT
         user_id,
         user_name,
@@ -52,18 +53,21 @@ app.post("/product", upload.single("image"), async (req, res) => {
     AND
         user_password = $2
   `,
-    [name, password]
-  );
-
-  if (foundUser[0].is_admin) {
-    const { rows } = await client.query(
-      "INSERT INTO products(product_name, product_cost, product_img, restaurant_id) VALUES($1, $2, $3, $4)",
-      [productName, productCost, newFileName, restaurantId]
+      [name, password]
     );
-    client.release();
-    res.send("Single file upload");
-  } else {
-    res.status(400).send({ message: "Bad request" });
+
+    if (foundUser[0].is_admin) {
+      const { rows } = await client.query(
+        "INSERT INTO products(product_name, product_cost, product_img, restaurant_id) VALUES($1, $2, $3, $4)",
+        [productName, productCost, newFileName, restaurantId]
+      );
+      client.release();
+      res.send("Single file upload");
+    } else {
+      res.status(400).send({ message: "Bad request" });
+    }
+  } catch (err) {
+    console.log(err);
   }
 });
 

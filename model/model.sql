@@ -31,7 +31,10 @@ CREATE TABLE products(
      product_name varchar(60) not null,
      product_cost int not null,
      product_img text not null,
-     restaurant_id int REFERENCES restaurants(res_id)
+     restaurant_id int,
+     FOREIGN KEY(restaurant_id) 
+	  REFERENCES restaurants(res_id)
+	  ON DELETE CASCADE
 );
 
 INSERT INTO products(product_name, product_cost, product_img, restaurant_id) VALUES('Osh', 10000, 'img1.jpg', 1);
@@ -51,8 +54,11 @@ CREATE TABLE orders(
 CREATE TABLE order_product(
      op_id serial PRIMARY KEY,
      op_count int not null DEFAULT 1,
-     product_id int REFERENCES products(product_id),
-     order_id int REFERENCES orders(order_id)
+     product_id int,
+     order_id int REFERENCES orders(order_id),
+     FOREIGN KEY(product_id) 
+	  REFERENCES products(product_id)
+	  ON DELETE CASCADE
 );
 
 -- select o.op_id, o.op_count, p.product_id, p.product_name, p.product_cost, p.product_img, p.restaurant_id from order_product o inner join products p on o.product_id = p.product_id where o.order_id = 1;
