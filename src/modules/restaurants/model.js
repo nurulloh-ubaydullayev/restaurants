@@ -23,13 +23,22 @@ const NEW_RESTAURANT = `
      RETURNING *
 `;
 
+const REMOVE_RESTAURANT = `
+     DELETE FROM
+          restaurants
+     WHERE 
+          res_id = $1
+`;
+
 const restaurants = () => fetchAll(RESTAURANTS);
 const getRestaurantsByCategory = categoryId => fetchAll(BY_CATEGORY, categoryId);
 const newRestaurant = (resName, resAddress, categoryId) =>
   fetch(NEW_RESTAURANT, resName, resAddress, categoryId);
+const removeRestaurant = resId => fetch(REMOVE_RESTAURANT, resId);
 
 module.exports = {
   restaurants,
   getRestaurantsByCategory,
   newRestaurant,
+  removeRestaurant,
 };
