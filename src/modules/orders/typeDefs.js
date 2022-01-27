@@ -39,5 +39,6 @@ module.exports = gql`
       tel: String!
       productsList: [Data]
     ): String!
+    updateOrder(orderId: ID!): String!
   }
 `;

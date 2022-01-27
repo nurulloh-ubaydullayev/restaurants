@@ -1,4 +1,10 @@
-const { orders, orderProducts, newOrder, newOrderProduct } = require("./model");
+const {
+  orders,
+  orderProducts,
+  newOrder,
+  newOrderProduct,
+  updateOrder,
+} = require("./model");
 const { verifyUser } = require("../../../lib/jwt");
 const { login } = require("../auth/model");
 
@@ -57,6 +63,20 @@ module.exports = {
           await newOrderProduct(i.count, i.id, order.order_id);
         }
         return "Created";
+      }
+    },
+    updateOrder: async (_, { orderId }, { token }) => {
+      try {
+        const { name, password } = verifyUser(token);
+
+        const foundUser = await login(name, password);
+
+        if (foundUser.is_admin) {
+          await updateOrder(orderId);
+          return "Updated";
+        }
+      } catch (e) {
+        console.log(e);
       }
     },
   },

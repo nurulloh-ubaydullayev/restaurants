@@ -39,16 +39,24 @@ const NEW_ORDER_PRODUCTS = `
      VALUES($1, $2, $3)
 `;
 
+const UPDATE_ORDER = `
+     UPDATE orders
+     SET order_status = true
+     WHERE order_id = $1
+`;
+
 const orders = () => fetchAll(ORDERS);
 const orderProducts = orderId => fetchAll(ORDER_PRODUCTS, orderId);
 const newOrder = (city, district, address, owner, tel, user) =>
   fetch(NEW_ORDER, city, district, address, owner, tel, user);
 
 const newOrderProduct = (count, pId, oId) => fetch(NEW_ORDER_PRODUCTS, count, pId, oId);
+const updateOrder = orderId => fetch(UPDATE_ORDER, orderId);
 
 module.exports = {
   orders,
   orderProducts,
   newOrder,
   newOrderProduct,
+  updateOrder,
 };
