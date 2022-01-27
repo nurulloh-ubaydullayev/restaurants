@@ -11,6 +11,6 @@ module.exports = gql`
 
   extend type Query {
     products: [Product!]!
-    byRestaurant: [Product!]!
+    byRestaurant(restaurantId: ID!): [Product!]!
   }
 `;
