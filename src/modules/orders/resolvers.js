@@ -41,7 +41,7 @@ module.exports = {
 
       const foundUser = await login(name, password);
 
-      if (foundUser.is_admin) {
+      if (foundUser) {
         const order = await newOrder(city, district, address, owner, tel, user);
 
         for (let i of productsList) {
